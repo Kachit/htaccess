@@ -194,7 +194,6 @@ Agora é claro que há uma versão invertida:
 ``` apacheconf
 ## Apache 2.2
 Order deny,allow
-Allow from all
 Deny from xxx.xxx.xxx.xxx
 Deny from xxx.xxx.xxx.xxy
 
@@ -317,7 +316,7 @@ Header set X-Frame-Options SAMEORIGIN env=!allow_framing
 <IfModule mod_deflate.c>
 
     # Force compression for mangled headers.
-    # http://developer.yahoo.com/blogs/ydn/posts/2010/12/pushing-beyond-gzipping
+    # https://developer.yahoo.com/blogs/ydn/pushing-beyond-gzipping-25601.html
     <IfModule mod_setenvif.c>
         <IfModule mod_headers.c>
             SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\s*,?\s*)+|[X~-]{4,13}$ HAVE_Accept-Encoding
