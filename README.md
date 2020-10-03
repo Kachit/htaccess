@@ -26,6 +26,7 @@ What we are doing here is mostly collecting useful snippets from all over the in
     - [Alias Paths to Script](#alias-paths-to-script)
     - [Redirect an Entire Site](#redirect-an-entire-site)
     - [Alias "Clean" URLs](#alias-clean-urls)
+    - [Exclude a URL from Redirection](#exclude-url-from-redirection)
 - [Security](#security)
     - [Deny All Access](#deny-all-access)
     - [Deny All Access Except Yours](#deny-all-access-except-yours)
@@ -100,7 +101,8 @@ RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 # on your HTTPS website to help prevent man-in-the-middle attacks.
 # See https://developer.mozilla.org/en-US/docs/Web/Security/HTTP_strict_transport_security
 <IfModule mod_headers.c>
-    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    # Remove "includeSubDomains" if you don't want to enforce HSTS on all subdomains
+    Header always set Strict-Transport-Security "max-age=31536000;includeSubDomains"
 </IfModule>
 ```
 
@@ -153,7 +155,7 @@ RewriteEngine On
 RewriteRule ^source-directory/(.*) /target-directory/$1 [R=301,L]
 ```
 
-### Alias Paths To Script
+### Alias Paths to Script
 ``` apacheconf
 FallbackResource /index.fcgi
 ```
@@ -182,6 +184,13 @@ RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^([^.]+)$ $1.php [NC,L]
 ```
 [Source](http://www.abeautifulsite.net/access-pages-without-the-php-extension-using-htaccess/)
+
+### Exclude URL from Redirection
+This snippet allows you to exclude a URL from redirection.  For example, if you have redirection rules setup but want to exclude robots.txt so search engines can access that URL as expected.
+``` apacheconf
+RewriteEngine On
+RewriteRule ^robots.txt - [L]
+```
 
 ## Security
 ### Deny All Access
